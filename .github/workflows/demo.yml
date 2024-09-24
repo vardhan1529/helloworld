@@ -1,5 +1,5 @@
 ﻿name: GitHub Actions Demo
-run-name: ${{ secrets.Check_Name }} is testing out GitHub Actions 🚀
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on:
     push:
         branches:
@@ -9,7 +9,9 @@ on:
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
+    environment: development
     steps:
+      - run: echo "{{ secrets.Check_Name }}"
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
