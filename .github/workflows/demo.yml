@@ -23,13 +23,21 @@ jobs:
         run:  echo "${{ secrets.JFROG_PASSWORD }}" | 
             docker login https://trial98hnw6.jfrog.io -u jayavardhan --password-stdin
 
-      - name: Build docker image
-        run:  |
-            docker build -t trial98hnw6.jfrog.io/j-basics-docker/my-app:${{ github.sha }} -f QuickDemo/Dockerfile QuickDemo
+      #- name: Build docker image
+      #  run:  |
+      #      docker build -t trial98hnw6.jfrog.io/j-basics-docker/my-app:${{ github.sha }} -f QuickDemo/Dockerfile QuickDemo
 
-      - name: Build docker image
-        run:  |
-            docker push trial98hnw6.jfrog.io/j-basics-docker/my-app:${{ github.sha }}
+      #- name: Build docker image
+      #  run:  |
+      #      docker push trial98hnw6.jfrog.io/j-basics-docker/my-app:${{ github.sha }}
+
+      - name: Build and push docker
+        uses: docker/build-push-action@v4
+        with:
+            context: QuickDemo
+            file: QuickDemo/Dockerfile
+            tags: trial98hnw6.jfrog.io/j-basics-docker/my-app:${{ github.sha }}
+            push: true
 
       #- run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
       #- run: echo "🖥️ The workflow is now ready to test your code on the runner."
