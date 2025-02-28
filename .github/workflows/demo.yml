@@ -7,7 +7,7 @@ on:
             - main
             - master
 jobs:
-  Explore-GitHub-Actions:
+  build-and-push:
     runs-on: ubuntu-latest
     environment: development
     steps:
@@ -15,13 +15,27 @@ jobs:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+  
       - name: Check out repository code
         uses: actions/checkout@v4
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
+
+      - name: Login to JFrog artifactory
+        run:  |
+            docker login https://trial98hnw6.jfrog.io -u jayavardhan --eyJ2ZXIiOiIyIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYiLCJraWQiOiJobnNLd0FuX2VTNFBZQzRvRGV6bWFwZWNvNUczbmZRVHpXcVRMSF9SM05rIn0.eyJzdWIiOiJqZmFjQDAxam40ejhuNm5xNTN5MHZiNHN2N2sxYWthL3VzZXJzL2pheWF2YXJkaGFuIiwic2NwIjoiYXBwbGllZC1wZXJtaXNzaW9ucy9hZG1pbiIsImF1ZCI6IipAKiIsImlzcyI6ImpmZmVAMDFqbjR6OG42bnE1M3kwdmI0c3Y3azFha2EiLCJpYXQiOjE3NDA3MjAzMzgsImp0aSI6ImNjNWJhZGNlLWY1YzEtNGE0ZS1iMGVkLWQyYjFlMTFiMDE2OSIsInRpZCI6ImEwZnZmdmlwYWEyZXoifQ.kLmg08YJuHjBxaaBm3c8j2V3Ohe11QqTfuFQI-anWHoUukm4aIzsuldWRoBpOZ77bhQqb9d8bCZV5gyenJul31mK3bAZQ5W8r2m4LBy25bnIMrfFdpLTnV40TFJlpT9b_Pgs8lFALPNsuS7bWP0-jM5v5G3ZPudTR5iWGk-KbSFSaOVdAaEYmzJPBt8kw58_ny5qnd1vP0TuuXkox-68knwyygp-sludhcX62QubwMgnr12oace8gMna7-EfdDBcYDo0Hp77iAIILmtFDgwaOpC7KlD8SAGfvsSEFsvDEXmZSQa4UpJpeQ1tuD-5iqtb-oHA1N8dlSnWBUeMMCedgg
+
+      - name: Build docker image
+        run:  |
+            docker build -t https://trial98hnw6.jfrog.io/https:///artifactory/api/docker/j-basics-docker/my-app:${{ github.sha }}
+
+      - name: Build docker image
+        run:  |
+            docker push https://trial98hnw6.jfrog.io/https:///artifactory/api/docker/j-basics-docker/my-app:${{ github.sha }}
+
+      #- run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      #- run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      #- name: List files in the repository
+      #  run: |
+      #    ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
   Demo-Test:
     runs-on: ubuntu-latest
