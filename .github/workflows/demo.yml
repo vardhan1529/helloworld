@@ -21,15 +21,15 @@ jobs:
 
       - name: Login to JFrog artifactory
         run:  |
-            docker login https://trial98hnw6.jfrog.io -u jayavardhan ${{ secrets.JFROG_TOKEN }}
+            docker login https://trial98hnw6.jfrog.io -u jayavardhan --password-stdin
 
       - name: Build docker image
         run:  |
-            docker build -t https://trial98hnw6.jfrog.io/https:///artifactory/api/docker/j-basics-docker/my-app:${{ github.sha }}
+            docker build -t https://trial98hnw6.jfrog.io/j-basics-docker/my-app:${{ github.sha }}
 
       - name: Build docker image
         run:  |
-            docker push https://trial98hnw6.jfrog.io/https:///artifactory/api/docker/j-basics-docker/my-app:${{ github.sha }}
+            docker push https://trial98hnw6.jfrog.io/j-basics-docker/my-app:${{ github.sha }}
 
       #- run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
       #- run: echo "🖥️ The workflow is now ready to test your code on the runner."
