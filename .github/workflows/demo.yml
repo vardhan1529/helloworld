@@ -25,11 +25,11 @@ jobs:
 
       - name: Build docker image
         run:  |
-            docker build -t https://trial98hnw6.jfrog.io/j-basics-docker/my-app:${{ github.sha }} .
+            docker build -t trial98hnw6.jfrog.io/j-basics-docker/my-app:${{ github.sha }} .
 
       - name: Build docker image
         run:  |
-            docker push https://trial98hnw6.jfrog.io/j-basics-docker/my-app:${{ github.sha }}
+            docker push trial98hnw6.jfrog.io/j-basics-docker/my-app:${{ github.sha }}
 
       #- run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
       #- run: echo "🖥️ The workflow is now ready to test your code on the runner."
