@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Login to JFrog artifactory
-        run:  |
+        run:  echo "${{ secrets.JFROG_PASSWORD }}" | 
             docker login https://trial98hnw6.jfrog.io -u jayavardhan --password-stdin
 
       - name: Build docker image
